@@ -68,21 +68,33 @@ async function getStock(stock) {
   return { symbol, latestPrice };  
 }
 
+// Function to set part of the IP address to 0
+function anonymizeIPAddress(ipAddress) {
+  const parts = ipAddress.split('.');
+  parts[parts.length - 1] = '0'; // Set the last part to 0
+  return parts.join('.');
+}
+
 
 
 module.exports = function (app) {
     
   app.route("/api/stock-prices").get(async function (req, res) {
     const { stock, like } = req.query;
+    let anonymizeIp = req.ip
+    if(anonymizeIp != '::1' &&  anonymizeIp != '127.0.0.1'){ // if not localhost
+      anonymizeIp = anonymizeIPAddress(req.ip)
+    }
+
     
     // when comparing two stocks
-    if (Array.isArray(stock)) {
+    if (Array.isArray(stock)) {      
 
       const { symbol, latestPrice } = await getStock( stock[0] ); // get data from API key
       const { symbol: symbol2, latestPrice: latestPrice2 } = await getStock( stock[1] ); // get data from API key
 
-      const firstStock = await saveStock(stock[0], like, req.ip);
-      const secondStock = await saveStock(stock[1], like, req.ip);
+      const firstStock = await saveStock(stock[0], like, anonymizeIp);
+      const secondStock = await saveStock(stock[1], like, anonymizeIp);
 
       let stockData = [];
 
@@ -130,7 +142,7 @@ module.exports = function (app) {
       return;
     }
 
-    const singleStockData = await saveStock(symbol, like, req.ip);
+    const singleStockData = await saveStock(symbol, like, anonymizeIp);
 
     res.json({
       stockData: {
