@@ -1,6 +1,7 @@
 'use strict';
 require('dotenv').config();
 const express     = require('express');
+const helmet = require('helmet');
 const bodyParser  = require('body-parser');
 const cors        = require('cors');
 const mongoose = require('mongoose')
@@ -9,6 +10,18 @@ const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
 
 const app = express();
+
+
+// Use helmet middleware to set up CSP headers
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"], // Only allow resources from the same origin
+      scriptSrc: ["'self'"], // Only allow scripts from the same origin
+      styleSrc: ["'self'"], // Only allow styles from the same origin
+    },
+  })
+);
 
 
 //connect to mongoose

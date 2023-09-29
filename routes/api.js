@@ -69,6 +69,7 @@ module.exports = function (app) {
   app.route("/api/stock-prices").get(async function (req, res) {
     const { stock, like } = req.query;
     
+    // when comparing two stocks
     if (Array.isArray(stock)) {
       console.log("stocks", stock);
 
@@ -109,8 +110,10 @@ module.exports = function (app) {
       });
       return;
     }
+    // when comparing two stocks
 
 
+    // when working with only one stock
     const { symbol, latestPrice } = await getStock(stock);
     if (!symbol) {
       res.json({ stockData: { likes: like ? 1 : 0 } });
@@ -127,6 +130,8 @@ module.exports = function (app) {
         likes: oneStockData.likes.length,
       },
     });
+    // when working with only one stock
+    
   });
   
 };
