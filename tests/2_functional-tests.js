@@ -29,7 +29,7 @@ suite('Functional Tests', function() {
         done();
       });
   });
-  /*
+  
   test('Viewing one stock and liking it: GET request to /api/stock-prices/', function (done) {
     chai
       .request(server)
@@ -46,7 +46,7 @@ suite('Functional Tests', function() {
         done();
       });
   });
-
+  
   test('Viewing the same stock and liking it again: GET request to /api/stock-prices/', function (done) {
     chai
       .request(server)
@@ -63,7 +63,7 @@ suite('Functional Tests', function() {
         done();
       });
   });
-
+  
   test('Viewing two stocks: GET request to /api/stock-prices/', function (done) {
     chai
       .request(server)
@@ -71,29 +71,46 @@ suite('Functional Tests', function() {
       .query({ stock: [stockSymbol1, stockSymbol2] })
       .end(function (err, res) {
         assert.equal(res.status, 200);
-        assert.isArray(res.body);
-        assert.lengthOf(res.body, 2); // Check if two stock data objects are returned
-        assert.property(res.body[0], 'stockData');
-        assert.property(res.body[1], 'stockData');
+        assert.isArray(res.body.stockData);
+        assert.lengthOf(res.body.stockData, 2); // Check if two stock data objects are returned
+
+        assert.property(res.body.stockData[0], 'stock');
+        assert.property(res.body.stockData[0], 'price');
+        assert.property(res.body.stockData[0], 'rel_likes');
+        assert.property(res.body.stockData[1], 'stock');
+        assert.property(res.body.stockData[1], 'price');
+        assert.property(res.body.stockData[1], 'rel_likes');
+        
+        assert.equal(res.body.stockData[0].stock, stockSymbol1);
+        assert.equal(res.body.stockData[1].stock, stockSymbol2);
         done();
       });
   });
-
+  
   test('Viewing two stocks and liking them: GET request to /api/stock-prices/', function (done) {
     chai
       .request(server)
       .get('/api/stock-prices')
-      .query({ stock: [stockSymbol1, stockSymbol2], like: [true, true], ip: [ip1, ip2] })
+      .query({ stock: [stockSymbol1, stockSymbol2], like: true, ip: ip1 })
       .end(function (err, res) {
         assert.equal(res.status, 200);
-        assert.isArray(res.body);
-        assert.lengthOf(res.body, 2); // Check if two stock data objects are returned
-        assert.property(res.body[0], 'stockData');
-        assert.property(res.body[1], 'stockData');
-        assert.isNumber(res.body[0].stockData.rel_likes); // Check for rel_likes property
-        assert.isNumber(res.body[1].stockData.rel_likes); // Check for rel_likes property
+        assert.isArray(res.body.stockData);
+        assert.lengthOf(res.body.stockData, 2); // Check if two stock data objects are returned
+        
+        assert.property(res.body.stockData[0], 'stock');
+        assert.property(res.body.stockData[0], 'price');
+        assert.property(res.body.stockData[0], 'rel_likes');
+        assert.property(res.body.stockData[1], 'stock');
+        assert.property(res.body.stockData[1], 'price');
+        assert.property(res.body.stockData[1], 'rel_likes');
+        
+        assert.equal(res.body.stockData[0].stock, stockSymbol1);
+        assert.equal(res.body.stockData[0].rel_likes, -1);
+        assert.equal(res.body.stockData[1].stock, stockSymbol2);
+        assert.equal(res.body.stockData[1].rel_likes, 1);
+
         done();
       });
   });
-  */
+  
 });
