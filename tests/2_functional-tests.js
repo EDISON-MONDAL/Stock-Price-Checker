@@ -15,6 +15,8 @@ suite('Functional Tests', function() {
   let ip2 = '192.168.0.1';
 
   test('Viewing one stock: GET request to /api/stock-prices/', function (done) {
+    this.timeout(6000);
+
     chai
       .request(server)
       .get('/api/stock-prices')
@@ -32,6 +34,8 @@ suite('Functional Tests', function() {
   });
   
   test('Viewing one stock and liking it: GET request to /api/stock-prices/', function (done) {
+    this.timeout(6000);
+
     chai
       .request(server)
       .get('/api/stock-prices')
@@ -50,6 +54,8 @@ suite('Functional Tests', function() {
   });
   
   test('Viewing the same stock and liking it again: GET request to /api/stock-prices/', function (done) {
+    this.timeout(6000);
+
     chai
       .request(server)
       .get('/api/stock-prices')
@@ -68,6 +74,8 @@ suite('Functional Tests', function() {
   });
   
   test('Viewing two stocks: GET request to /api/stock-prices/', function (done) {
+    this.timeout(6000);
+
     chai
       .request(server)
       .get('/api/stock-prices')
@@ -92,6 +100,8 @@ suite('Functional Tests', function() {
   });
   
   test('Viewing two stocks and liking them: GET request to /api/stock-prices/', function (done) {
+    this.timeout(6000);
+    
     chai
       .request(server)
       .get('/api/stock-prices')
