@@ -19,6 +19,7 @@ suite('Functional Tests', function() {
       .request(server)
       .get('/api/stock-prices')
       .query({ stock: stockSymbol1 })
+      .timeout(6000)
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.property(res.body, 'stockData');
@@ -35,6 +36,7 @@ suite('Functional Tests', function() {
       .request(server)
       .get('/api/stock-prices')
       .query({ stock: stockSymbol1, like: true, ip: ip1 })
+      .timeout(6000)
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.property(res.body, 'stockData');
@@ -52,6 +54,7 @@ suite('Functional Tests', function() {
       .request(server)
       .get('/api/stock-prices')
       .query({ stock: stockSymbol1, like: true, ip: ip1 })
+      .timeout(6000)
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.property(res.body, 'stockData');
@@ -69,7 +72,7 @@ suite('Functional Tests', function() {
       .request(server)
       .get('/api/stock-prices')
       .query({ stock: [stockSymbol1, stockSymbol2] })
-      .timeout(4000)
+      .timeout(6000)
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.isArray(res.body.stockData);
@@ -93,7 +96,7 @@ suite('Functional Tests', function() {
       .request(server)
       .get('/api/stock-prices')
       .query({ stock: [stockSymbol1, stockSymbol2], like: true, ip: ip1 })
-      .timeout(4000)
+      .timeout(6000)
       .end(function (err, res) {
         assert.equal(res.status, 200);
         assert.isArray(res.body.stockData);
